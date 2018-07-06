@@ -1,0 +1,48 @@
+{% extends 'partials/base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% do 
+        assets.addCss('https://cdn.jsdelivr.net/npm/bulma-divider@2.0.1/dist/css/bulma-divider.min.css', 100) %}
+    {% do 
+		assets.addCss('theme://css/blog-item.css', 98) %}
+{% endblock %}
+
+{% block content %}
+    <div class="columns">
+        <div class="column">
+            <div class="mb4">
+                {% set image = page.media.images | first %}
+                <h1 class="is-size-3 has-text-weight-light has-text-centered">{{ page.title }}</h1>
+                <div class="flex flex-column">
+
+                    {% include 'partials/blog-item-meta.html.twig' with {page: page} %}
+
+                    <div class="content lg-mx3">
+
+                        <p>{{ page.content }}</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="column is-one-fifth">
+            <aside>
+                {% if config.get('plugins.page-toc.active') or attribute(page.header, 'page-toc').active %}
+                    <div class="page-toc">
+                        {% set table_of_contents = toc(page.content) %}
+                        {% if table_of_contents is not empty %}
+                            <div class="is-divider" data-content="Table of Contents"></div>
+                            {{ table_of_contents }}
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+
+				
+            </aside>
+        </div>
+    </div>
+{% endblock %}

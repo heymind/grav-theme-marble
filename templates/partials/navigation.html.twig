@@ -1,0 +1,23 @@
+<div class="navbar-end is-flex navbar-end is-flex items-center ml-auto">
+    {% for page in pages.children.visible %}
+        {% set current_page = (page.active or page.activeChild) ? 'has-text-weight-semibold' : '' %}
+        <a class="navbar-item {{ current_page }}" href="{{ page.url }}">
+            {% if page.header.icon %}
+                <span class="icon">
+                    <i class="fa fa-{{ page.header.icon }}"></i>
+                </span>
+            {% endif %}
+            <span>{{ page.menu }}</span>
+        </a>
+    {% endfor %}
+    {% for mitem in site.menu %}
+        <a class="navbar-item" href="{{ mitem.url }}">
+            {% if mitem.icon %}
+                <span class="icon">
+                    <i class="fa fa-{{ mitem.icon }}"></i>
+                </span>
+            {% endif %}
+            <span>{{ mitem.text }}</span>
+        </a>
+    {% endfor %}
+</div>

@@ -1,0 +1,37 @@
+{% set pagination = pagination | default(page.collection.params.pagination) %}
+{% set base_url = base_url | default(page.url) %}
+
+{% if pagination | length > 1 %}
+    <div class="is-divider"></div>
+    <nav class="pagination is-rounded" role="navigation" aria-label="pagination">
+        {# {% if pagination.hasPrev %}
+            {% set url = (base_url ~ pagination.params ~ pagination.prevUrl) | replace({'//': '/'}) %}
+            <a class="pagination-previous" href="{{ url }}">&laquo;</a>
+        {% endif %}
+        {% if pagination.hasNext %}
+            {% set url = (base_url ~ pagination.params ~ pagination.nextUrl) | replace({'//': '/'}) %}
+            <a class="pagination-next" href="{{ url }}">&raquo;</a>
+        {% endif %} #}
+        <ul class="pagination-list justify-center">
+            {% for paginate in pagination %}
+
+                {% if paginate.isCurrent %}
+                    <li>
+                        <a class="pagination-link is-current">{{ paginate.number }}</a>
+                    </li>
+                {% elseif paginate.isInDelta %}
+                    {% set url = (base_url ~ pagination.params ~ paginate.url) | replace({'//': '/'}) %}
+                    <li>
+                        <a class="pagination-link" href="{{ url }}">{{ paginate.number }}</a>
+                    </li>
+                {% elseif paginate.isDeltaBorder %}
+                    <li class="gap">
+                        <span>&hellip;</span></li>
+                {% endif %}
+
+            {% endfor %}
+        </ul>
+
+    </nav>
+
+{% endif %}

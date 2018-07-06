@@ -1,0 +1,25 @@
+<div class="flex justify-center items-baseline is-size-7">
+    <span class="icon has-text-grey">
+        <i class="far fa-calendar-alt"></i>
+    </span>
+    <span>{{ page.date|date(system.pages.dateformat.short) }}</span>
+
+    {% if page.taxonomy.category %}
+        <span class="ml2 icon has-text-grey">
+            <i class="far fa-folder"></i>
+        </span>
+        {% for category in page.taxonomy.category %}
+            <a class="has-text-black" href="{{ blog.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>
+        {% endfor %}
+
+    {% endif %}
+    {% if page.taxonomy.tag %}
+        <span class="ml2 icon has-text-grey">
+            <i class="fas fa-hashtag"></i>
+        </span>
+        {% for tag in page.taxonomy.tag %}
+            <a class="has-text-black pr1" href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>
+        {% endfor %}
+
+    {% endif %}
+</div>

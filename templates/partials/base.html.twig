@@ -1,0 +1,88 @@
+{% set theme_config = attribute(config.themes, config.system.pages.theme) %}
+<!DOCTYPE html>
+<html lang="{{ grav.language.getActive ?: theme_config.default_lang }}">
+    <head>
+        {% block head %}
+            <meta charset="utf-8"/>
+            <title>
+                {% if header.title %}{{ header.title|e('html') }}
+                    |
+                {% endif %}{{ site.title|e('html') }}</title>
+
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            {% include 'partials/metadata.html.twig' %}
+
+            <link rel="icon" type="image/png" href="{{ url('theme://images/logo.png') }}"/>
+            <link rel="canonical" href="{{ page.url(true, true) }}"/>
+
+            {% block stylesheets %}
+                {% do 
+                    assets.addCss('https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css', 100) %}
+                {% do 
+                    assets.addCss('https://use.fontawesome.com/releases/v5.1.0/css/all.css', 99) %}
+                {% do 
+                    assets.addCss('https://cdn.jsdelivr.net/npm/basscss@8.0.4/css/basscss.min.css', 99) %}
+                {# {% do 
+                    assets.addCss('theme://css/custom.css', 98) %} #}
+            {% endblock %}
+            {{ assets.css() }}
+
+            {% block javascripts %}
+                {# {% do assets.addJs('jquery', 100) %} #}
+            {% endblock %}
+            {{ assets.js() }}
+
+        {% endblock head%}
+    </head>
+    <body id="top" class="{{ page.header.body_classes }}">
+
+        {% block header %}
+            <nav class="navbar is-spaced has-shadow">
+                <div class="container is-flex">
+                    <div class="navbar-brand">
+                        <a class="navbar-item is-uppercase is-size-5" href="{{ base_url == '' ? '/' : base_url }}">
+                            <span class="icon">
+                                <i class="far fa-smile"></i>
+                            </span>
+                            <span>{{ config.site.title }}</span>
+                        </a>
+                    </div>
+
+                    {% block header_navigation %}
+                        {% include 'partials/navigation.html.twig' %}
+                    {% endblock %}
+
+                </div>
+            </nav>
+        {% endblock %}
+
+        {% block body %}
+            <section class="section" style="line-height:1.8;">
+                <div class="container">
+                    {% block content %}{% endblock %}
+                </div>
+            </section>
+        {% endblock %}
+
+        {% block footer %}
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>
+                        <a href="http://getgrav.org">Grav</a>
+                        was
+                        <i class="fa fa-code"></i>
+                        with
+                        <i class="fa fa-heart"></i>
+                        by
+                        <a href="http://www.rockettheme.com">RocketTheme</a>.</p>
+                </div>
+            </footer>
+        {% endblock %}
+
+        {% block bottom %}
+            {{ assets.js('bottom') }}
+        {% endblock %}
+
+    </body>
+</html>

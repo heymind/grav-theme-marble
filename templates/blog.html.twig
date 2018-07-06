@@ -1,0 +1,52 @@
+{% extends 'partials/base.html.twig' %}
+{% set collection = page.collection() %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% do 
+        assets.addCss('https://cdn.jsdelivr.net/npm/bulma-divider@2.0.1/dist/css/bulma-divider.min.css', 100) %}
+{% endblock %}
+
+{% block content %}
+    <div class="columns">
+        <div class="column is-one-fifth">
+            <aside>
+                <div class="is-divider" data-content="Categories"></div>
+                <ul class="menu-list">
+                    {% for category, count in taxonomylist.get.category %}
+                        <li>
+                            <a href="{{uri.path}}/category{{ config.system.param_sep }}{{ category }}">{{category}}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </aside>
+            <aside>
+                <div class="is-divider" data-content="Tags"></div>
+                <div class="tags">
+                    {% for tag, count in taxonomylist.get.tag %}
+                        <a class="tag" href="{{uri.path}}/tag{{ config.system.param_sep }}{{ tag }}">{{tag}}</a>
+                    {% endfor %}
+                </div>
+            </aside>
+        </div>
+        <div class="column">
+
+            {% if uri.param("category")%}
+                <div class="is-divider" data-content="CATEGORY:  {{ uri.param('category') }}"></div>
+            {% elseif  uri.param("tag")  %}
+                <div class="is-divider" data-content="TAG:  {{ uri.param('tag') }}"></div>
+            {% endif %}
+            {% for child in collection %}
+                {% include 'partials/blog-list-item.html.twig' with {blog: page, page: child} %}
+            {% endfor %}
+
+            {% if config.plugins.pagination.enabled and collection.params.pagination %}
+                {% include 'partials/pagination.html.twig' with {
+                    base_url : page.url,
+                    pagination: collection.params.pagination
+                } %}
+
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

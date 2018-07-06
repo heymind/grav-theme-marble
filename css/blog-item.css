@@ -1,0 +1,13 @@
+.menu_level_2 {
+  padding-left: 30px;
+}
+.menu_level_3 {
+  padding-left: 50px;
+}
+.page-toc a {
+  color: #555;
+}
+.page-toc a:hover {
+  color: #222;
+  text-decoration: underline;
+}

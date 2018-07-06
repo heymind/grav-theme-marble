@@ -1,0 +1,16 @@
+<div class="mb4">
+    {% set image = page.media.images | first %}
+    <a class="block is-marginless is-size-2 has-text-centered has-text-link">{{ page.title }}</a>
+    <div class="flex flex-column">
+        
+          {% include 'partials/blog-item-meta.html.twig' with {page: page} %}
+
+        <div class="content lg-mx3">
+
+            <p>{{ page.summary }}</p>
+
+        </div>
+        <a class="button is-link is-outlined self-center is-rounded" href="{{ page.url }}">Contine reading</a>
+    </div>
+
+</div>
